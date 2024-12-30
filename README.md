@@ -34,7 +34,7 @@ First, install the dependencies:
 
 ```sh
 cd ./ui
-pnpm i
+bun i
 ```
 
 Then, create a `.env` file inside `./ui` with the following:
@@ -46,7 +46,7 @@ GROQ_API_KEY=...
 Then, run the Next.js project:
 
 ```sh
-pnpm run dev
+bun dev
 ```
 
 ## Usage
@@ -64,4 +64,4 @@ Make sure to create teh `.env` mentioned above first!
 A few things to try if you are running into trouble:
 
 1. Make sure there is no other local application server running on the 8000 port.
-2. Under `/agent/my_agent/demo.py`, change `0.0.0.0` to `127.0.0.1` or to `localhost`
+2. Under `/agent/rag_agent/demo.py`, change `0.0.0.0` to `127.0.0.1` or to `localhost`

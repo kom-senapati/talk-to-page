@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "my_agent"
+name = "rag_agent"
 version = "0.1.0"
 description = "Starter"
-authors = ["Ariel Weinberger <weinberger.ariel@gmail.com>"]
+authors = ["K Om Senapati <komnoob123@gmail.com>"]
 license = "MIT"
 
 [project]
-name = "greeter"
+name = "rag_agent"
 version = "0.0.1"
 
 [build-system]
@@ -25,6 +25,11 @@ python-dotenv = "^1.0.1"
 langchain-core = "^0.3.25"
 langgraph-cli = {extras = ["inmem"], version = "^0.1.64"}
 langchain-groq = "^0.2.2"
+chroma = "^0.2.0"
+fastembed = "^0.5.0"
+bs4 = "^0.0.2"
+faiss-cpu = "^1.9.0.post1"
+ipykernel = "^6.29.5"
 
 [tool.poetry.scripts]
-demo = "my_agent.demo:main"
+demo = "rag_agent.demo:main"

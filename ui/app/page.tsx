@@ -1,35 +1,61 @@
 "use client";
 
-import { CopilotKit } from "@copilotkit/react-core";
-import { CopilotChat, CopilotKitCSSProperties } from "@copilotkit/react-ui";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useCoAgent, useCopilotChat } from "@copilotkit/react-core";
+import { CopilotChat } from "@copilotkit/react-ui";
+import { MessageRole, TextMessage } from "@copilotkit/runtime-client-gql";
 import "@copilotkit/react-ui/styles.css";
 
+interface AgentState {
+  url: string
+}
+
 export default function Home() {
+  const { state, setState, run } = useCoAgent<AgentState>({
+    name: "rag_agent",
+    initialState: {
+      url: "https://blog.langchain.dev/langgraph/"
+    }
+  })
+
+  const { isLoading } = useCopilotChat()
+
+  const handleSave = () => {
+    run(() => new TextMessage({ role: MessageRole.System, content: "URL UPDATED" }))
+  }
+
   return (
-    <main className="h-screen w-full p-10" style={{
-      "--copilot-kit-primary-color": "#0078D7",
-      "--copilot-kit-contrast-color": "#FFFFFF",
-      "--copilot-kit-secondary-color": "#F3F4F6",
-      "--copilot-kit-secondary-contrast-color": "#333333",
-      "--copilot-kit-background-color": "#F9FAFB",
-      "--copilot-kit-muted-color": "#6B7280",
-      "--copilot-kit-separator-color": "#E5E7EB",
-      "--copilot-kit-scrollbar-color": "#D1D5DB",
-      "--copilot-kit-response-button-color": "#2563EB",
-      "--copilot-kit-response-button-background-color": "#EFF6FF"
-    } as CopilotKitCSSProperties}>
-      <CopilotKit runtimeUrl="/api/copilotkit" agent="chatbot">
-        <div>
-          <h1 className="text-2xl text-center">🦙 LLama Chat 🦙</h1>
+    <main className="h-screen w-full p-4 md:p-10">
+      <div className="h-[20%] flex flex-col">
+        <h1 className="text-2xl md:text-5xl font-bold text-center mb-5">🗣️ TalkToPage 🌐📄</h1>
+        <div className="flex flex-row justify-center gap-2">
+          <Input
+            type="text"
+            placeholder="Enter URL"
+            value={state.url}
+            onChange={(e) => setState({ url: e.target.value })}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                console.log(state)
+                e.preventDefault();
+                handleSave();
+              }
+            }}
+            className="flex-grow md:max-w-lg"
+          />
+          <Button onClick={handleSave} disabled={!state.url || isLoading}>
+            Save
+          </Button>
         </div>
-        <CopilotChat
-          className="h-full w-full"
-          labels={{
-            title: "LLama Assistant",
-            initial: "Hi! 👋 How can I assist you today?",
-          }}
-        />
-      </CopilotKit>
+      </div>
+      <CopilotChat
+        className="h-[80%] w-full"
+        labels={{
+          title: "LLama Assistant",
+          initial: "Hi! 👋 How can I assist you today?",
+        }}
+      />
     </main>
   );
 }
