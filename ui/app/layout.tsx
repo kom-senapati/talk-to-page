@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { CopilotKit } from "@copilotkit/react-core";
+import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,8 +24,16 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <CopilotKit runtimeUrl="/api/copilotkit" agent="rag_agent">
-          {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </CopilotKit>
+        <Toaster />
       </body>
     </html>
   );

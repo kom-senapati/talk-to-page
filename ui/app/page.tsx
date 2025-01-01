@@ -1,11 +1,13 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import ChatInterface from "@/components/chat-interface";
+import Header from "@/components/header";
+import RetroGrid from "@/components/ui/retro-grid";
+import UrlInput from "@/components/url-input";
+import Wrapper from "@/components/wrapper";
+import { useToast } from "@/hooks/use-toast";
 import { useCoAgent, useCopilotChat } from "@copilotkit/react-core";
-import { CopilotChat } from "@copilotkit/react-ui";
-import { MessageRole, TextMessage } from "@copilotkit/runtime-client-gql";
-import "@copilotkit/react-ui/styles.css";
+import { Role, TextMessage } from "@copilotkit/runtime-client-gql";
 
 interface AgentState {
   url: string
@@ -18,44 +20,29 @@ export default function Home() {
       url: "https://blog.langchain.dev/langgraph/"
     }
   })
-
-  const { isLoading } = useCopilotChat()
+  const { isLoading, appendMessage, visibleMessages } = useCopilotChat()
+  const { toast } = useToast()
 
   const handleSave = () => {
-    run(() => new TextMessage({ role: MessageRole.System, content: "URL UPDATED" }))
+    if (!state.url) return;
+    run(() => new TextMessage({ role: Role.System, content: "URL UPDATED" }))
+    toast({
+      title: "URL UPDATED",
+      description: "The URL has been updated successfully.",
+    })
   }
 
   return (
-    <main className="h-screen w-full p-4 md:p-10">
-      <div className="h-[20%] flex flex-col">
-        <h1 className="text-2xl md:text-5xl font-bold text-center mb-5">🗣️ TalkToPage 🌐📄</h1>
-        <div className="flex flex-row justify-center gap-2">
-          <Input
-            type="text"
-            placeholder="Enter URL"
-            value={state.url}
-            onChange={(e) => setState({ url: e.target.value })}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                console.log(state)
-                e.preventDefault();
-                handleSave();
-              }
-            }}
-            className="flex-grow md:max-w-lg"
-          />
-          <Button onClick={handleSave} disabled={!state.url || isLoading}>
-            Save
-          </Button>
-        </div>
-      </div>
-      <CopilotChat
-        className="h-[80%] w-full"
-        labels={{
-          title: "LLama Assistant",
-          initial: "Hi! 👋 How can I assist you today?",
-        }}
+    <Wrapper>
+      <Header />
+      <UrlInput state={state} setState={setState} handleSave={handleSave} isLoading={false} />
+      <ChatInterface
+        isLoading={isLoading}
+        appendMessage={appendMessage}
+        visibleMessages={visibleMessages as TextMessage[]}
       />
-    </main>
-  );
+
+      <RetroGrid className="z-0" />
+    </Wrapper>
+  )
 }
