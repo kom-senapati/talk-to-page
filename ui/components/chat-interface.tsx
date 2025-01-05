@@ -109,7 +109,7 @@ export default function ChatInterface({
               </Avatar>
             )}
             <div
-              className={cn("relative rounded-2xl px-4 py-2 max-w-md text-sm", {
+              className={cn("relative rounded-2xl px-4 py-2 mb-2 max-w-md text-sm", {
                 "bg-secondary text-secondary-foreground": (message.role === "assistant"),
                 "bg-primary text-primary-foreground": (message.role === "user"),
               })}
@@ -146,7 +146,7 @@ export default function ChatInterface({
                   )}
                 </div>
               )}
-              {message.content}
+              {message.role !== "system" && message.content}
             </div>
             {(message.role === "user") && (
               <Avatar className="w-8 h-8">
