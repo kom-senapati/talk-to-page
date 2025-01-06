@@ -11,9 +11,10 @@
 - Uses a self-RAG LangGraph agent to interact with URLs.  
 - Simplifies web content extraction and conversation.  
 
-### :movie_camera: Demo
+| Demo Video                                                                 | Blog Post                                                                 |
+|----------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| [![YouTube](http://i.ytimg.com/vi/O0Y2WEqkros/hqdefault.jpg)](https://www.youtube.com/watch?v=O0Y2WEqkros) | [![Blog](https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Ffr5p7w1bobvfjpqw29gn.png)](https://dev.to/komsenapati/building-talk-to-page-chat-or-talk-with-any-website-g0h) |
 
-[![YouTube](http://i.ytimg.com/vi/pBkgMzgGXns/hqdefault.jpg)](https://www.youtube.com/watch?v=pBkgMzgGXns)
 
 ### :hammer_and_wrench: Tech Stack
 
